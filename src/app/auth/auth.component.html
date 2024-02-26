@@ -1,19 +1,30 @@
-
 <form #auth="ngForm" (ngSubmit)="onSubmit(auth)">
-    <div class="form-group">
-        <label for="email">E-mail</label>
-        <input class="form-control" type="email" name="email" ngModel required >
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input class="form-control" type="password" name="password" ngModel required minlength="6" >
-    </div>
-    <div>
-        <button class="btn btn-danger" [disabled]="!auth.valid"   type="submit">
-          {{isLogin ?"Login":"Signup"}}
-        </button>|
-        <button class="btn btn-danger"  type="button" (click)="onSignUp()">
-          Switchto {{isLogin ?"Signup":"Login"}}
-        </button>
-    </div>
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input class="form-control" type="email" name="email" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input class="form-control" type="password" name="password" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="phone">phone</label>
+    <input class="form-control" type="text" name="phone" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="status">status</label>
+    <input class="form-control" type="number" name="status" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="name">name</label>
+    <input class="form-control" type="text" name="name" ngModel required>
+  </div>
+  <div>
+    <button class="btn btn-danger" [disabled]="!auth.valid" type="submit">
+      {{isLogin ?"Login":"Signup"}}
+    </button>|
+    <button class="btn btn-danger" type="button" (click)="onSignUp()">
+      Switchto {{isLogin ?"Signup":"Login"}}
+    </button>
+  </div>
 </form>

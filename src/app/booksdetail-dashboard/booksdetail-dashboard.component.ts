@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 
 
 @Component({
@@ -7,28 +9,18 @@ import { UserService } from '../user.service';
   templateUrl: './booksdetail-dashboard.component.html',
   styleUrl: './booksdetail-dashboard.component.css'
 })
-export class BooksdetailDashboardComponent implements OnInit{
+export class BooksdetailDashboardComponent {
+  searchText = '';
 
   POST:any;
   page:number=1;
   count:number=0;
   tableSize:number=10;
- 
- constructor(private userSerive:UserService){}
- ngOnInit() {
-  this.postList();
-}
+ formValue!:FormGroup 
 
-postList(){
-  this.userSerive.getPosts().subscribe(res=>{
-    this.POST=res;
-    console.log(this.POST)
-  })
-}
 onTableChange(event:any){
 this.page=event
-
-
 }
-searchText = '';
+
+
 }

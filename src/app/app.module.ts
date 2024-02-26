@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BooksdetailDashboardComponent } from './booksdetail-dashboard/booksdetail-dashboard.component';
 import { AuthComponent } from './auth/auth.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -25,7 +25,7 @@ import { SearchPipe } from './search.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule, FormsModule, HttpClientModule,
-    NgxPaginationModule,
+    NgxPaginationModule,ReactiveFormsModule
 
  
   ],
