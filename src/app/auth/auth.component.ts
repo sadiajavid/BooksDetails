@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from './auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-auth',
@@ -9,9 +10,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent {
   authObs: any;
-
-  toastr: any;
-email: any;
+  email: any;
 
 
   constructor(private authService: AuthService) { }
@@ -34,9 +33,11 @@ onSubmit(form: NgForm) {
 
   if (this.isLogin) {
     this.authObs = this.authService.onLogin(email, password);
+    Swal.fire("User successfully login");
   
   } else {
     this.authObs = this.authService.onRegister(email, password, name, status, phone);
+    Swal.fire("user successfully register");
   }
 
   this.authObs.subscribe((res: any) => {
