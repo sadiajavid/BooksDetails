@@ -1,3 +1,5 @@
+
+
 <form #auth="ngForm" (ngSubmit)="onSubmit(auth)">
   <div class="form-group">
     <label for="email">E-mail</label>
@@ -11,10 +13,7 @@
     <label for="phone">phone</label>
     <input class="form-control" type="text" name="phone" ngModel required>
   </div>
-  <div class="form-group">
-    <label for="status">status</label>
-    <input class="form-control" type="number" name="status" ngModel required>
-  </div>
+
   <div class="form-group">
     <label for="name">name</label>
     <input class="form-control" type="text" name="name" ngModel required>
@@ -25,6 +24,7 @@
     </button>|
     <button class="btn btn-danger" type="button" (click)="onSignUp()">
       Switchto {{isLogin ?"Signup":"Login"}}
-    </button>
+    </button>||
+   <a routerLink="/forget"> <button class="btn btn-primary">Forget Password</button></a>
   </div>
-</form>
+  </form>

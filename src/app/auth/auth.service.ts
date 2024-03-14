@@ -1,18 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import {  BehaviorSubject, Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 import { Model } from './user.model';
+
 export interface UserData {
   name: string;
   email: string;
   phone: string;
   status: number;
+  description: string;
   updated_at: string;
   created_at: string;
+  image_path: string;
   id: number;
 }
 export interface Auth {
-  message: string;
+  response: any;
+ message: string;
   status: number;
   data: UserData;
   access_token:string,
@@ -25,27 +30,76 @@ export interface Auth {
 })
 
 export class AuthService {
-  user: Subject<Model> = new Subject<Model>();
-  constructor(private http: HttpClient) { }
+
+  user = new BehaviorSubject<Model | null>(null);
+  constructor(private http: HttpClient ,private router:Router) { }
+
   onRegister(email: string, password: string, name: string, status: number, phone: string): Observable<Auth> {
     return this.http.post<Auth>("http://127.0.0.1:8000/api/register", {
       email: email, password: password, name: name, phone: phone, status: status
-    }).pipe(tap(res=>{
-      this.handleAuthentication(res)
-    }))
-  }
-  onLogin(email: string, password: string ): Observable<Auth> {
-    return this.http.post<Auth>("http://127.0.0.1:8000/api/login", {
-      email: email, password: password
     })
   }
 
-  handleAuthentication(response: any): void {
-  
-    const access_token = response.response.access_token;
-    const expires_in = response.response.expires_in;
-    const token_type = response.response.token_type;
-    const user = new Model(access_token, expires_in, token_type);
-    this.user.next(user);
+  onLogin(email: string, password: string ): Observable<Auth> {
+    return this.http.post<Auth>("http://127.0.0.1:8000/api/login", {
+      email: email, password: password
+    }).pipe(tap((res)=>{
+     this.handleAuthentication(res.response.expires_in,res. response.access_token);
+     this.router.navigate(["/post"])
+
+    }))
   }
+
+  private handleAuthentication(expires_in:number,accesstoken:string):void{
+    const expirationDate=new Date (new Date().getTime()+ expires_in*1000);
+    const user=new Model(accesstoken, expirationDate)
+    this.user.next(user) 
+    localStorage.setItem("userData",JSON.stringify(user));
+    localStorage.setItem('token', accesstoken);
+    localStorage.setItem('expirationDate', expirationDate.toISOString());
+    
+  }  
+
+  getPosts(page: number) {
+    return this.http.get(`http://127.0.0.1:8000/api/posts`+ '?page=' + page);
+  }
+  create(name:string,description:string,image_path:string,status:string){
+    return this.http.post("http://127.0.0.1:8000/api/posts", {name:name,description:description,image_path:image_path,status:status})
+  }
+
+  viewPosts(id: number) {
+    return this.http.get<any>(`http://127.0.0.1:8000/api/posts/${id}`);
+  }
+updatedPosts(id: any, formData: any) {
+  return this.http.put(`http://127.0.0.1:8000/api/posts/${id}`, formData)  
+ }
+
+  deletePosts(postId: number): Observable<any>{
+  return this.http.delete(`http://127.0.0.1:8000/api/posts/${postId}`)
+ }
+
+ restorePosts(postId:number,restore:any){
+  return this.http.put(`http://127.0.0.1:8000/api/postss/${postId}`,restore)
+ }
+
+ logout(email:string,password:string){
+  return this.http.post("http://127.0.0.1:8000/api/logout",{email,password} )
+ }
+ clearToken() {
+  localStorage.removeItem('token'); 
+  localStorage.removeItem('userData'); 
+  localStorage.removeItem('expirationDate'); 
+
 }
+profile(){
+  return this.http.get("http://127.0.0.1:8000/api/profile")
+}
+forget(email:string){
+  return this.http.post("http://127.0.0.1:8000/api/password/email",{email:email})
+}
+resetpass(email:string,password:string,password_confirmation:string,token:string){
+  return this.http.post("http://127.0.0.1:8000/api/password/reset",{email,password,password_confirmation,token})
+}
+
+  }
+

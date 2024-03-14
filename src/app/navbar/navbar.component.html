@@ -7,13 +7,18 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item active" *ngIf="!authenticated">
           <a class="nav-link" routerLink="/auth" >Authentication  <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+        <li class="nav-item" *ngIf="authenticated">
+          <a class="nav-link" routerLink="/post">Dashboard</a>
         </li>
+       
       </ul>
-   
+      <div>
+      <!-- <button   *ngIf="authenticated" class="btn btn-primary" (click)="onProfile()">profile</button> -->
+     <a routerLink="/profile"> <i class="fa fa-user fa-2x" aria-hidden="true"  style="margin-right: 20px;" *ngIf="authenticated"></i></a>
+    </div>
+      <button  *ngIf="authenticated" class="btn btn-danger" (click)="onlogOut()">Logout</button>
     </div>
   </nav>

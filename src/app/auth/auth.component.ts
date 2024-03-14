@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Auth, AuthService } from './auth.service';
-import { Router } from '@angular/router';
-
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -12,8 +10,11 @@ import { Router } from '@angular/router';
 export class AuthComponent {
   authObs: any;
 
+  toastr: any;
+email: any;
 
-  constructor(private authService: AuthService,private router:Router) { }
+
+  constructor(private authService: AuthService) { }
   phone: string = '';
   isLogin = false;
   
@@ -33,14 +34,16 @@ onSubmit(form: NgForm) {
 
   if (this.isLogin) {
     this.authObs = this.authService.onLogin(email, password);
+  
   } else {
     this.authObs = this.authService.onRegister(email, password, name, status, phone);
   }
 
   this.authObs.subscribe((res: any) => {
+    
     console.log(res);
-   
   });
+
 }
 
 

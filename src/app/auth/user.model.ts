@@ -1,4 +1,9 @@
-export class Model{
-   constructor(private access_token:string,private expires_in :number
-    ,private token_type :string){} 
+export class Model {
+    constructor(private accessToken: string, private ExpirationDate: Date ) { }
+    get token(): string | null {
+        if (!this.ExpirationDate || new Date() > this.ExpirationDate) {
+            return null;
+        }
+        return this.accessToken;
+    }
 }

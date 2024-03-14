@@ -1,0 +1,8 @@
+
+<form>
+    <div class="form-group">
+      <label for="1">Email address:</label>
+      <input type="email" class="form-control" name="email" [(ngModel)]="email" id="1" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+   <button (click)="forgetPass(email)"  type="submit" class="btn btn-primary">Reset</button>
+  </form>

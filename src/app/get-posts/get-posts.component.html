@@ -1,0 +1,100 @@
+<hr>
+<div class="d-flex">
+  <app-create></app-create>
+  ||
+
+  <app-restore-post></app-restore-post>
+</div>
+<hr>
+<div class="form-group">
+ 
+  <input type="text" class="form-control" id="search-text" aria-describedby="search-text" 
+    [(ngModel)]="searchText" placeholder="Enter text to search" 
+    autofocus>
+</div><hr>
+<table class="table table-striped ">
+  <thead class="bg-info">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">id</th>
+      <th scope="col">ImagePath</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let post of posts  | paginate
+    : {
+        itemsPerPage:10,
+        currentPage: pagination,
+        totalItems: allStudents
+      } | appFilter: searchText">
+      <td>{{post.name}}</td>
+      <td>{{post.id}}</td>
+      <td> <img [src]="'http://127.0.0.1:8000' + '/'+ post.image_path" alt="Image" class="image">
+      </td>
+      <td>{{post.description}}</td>
+      <td>
+        <div class="button-group">
+            <i class="fa fa-eye fa-lg" style="color:green;  margin-right: 20px;"(click)="onViewPost(post.id)" data-toggle="modal"
+            data-target="#viewPostModal"></i>
+          <a routerLink="/update/{{post.id}}">  <i class="fa fa-edit fa-lg" style="color:blue;  margin-right: 20px;" ></i></a>
+          
+           <i class="fa fa-trash fa-lg" style="color:red;  margin-right: 20px;" (click)="onDelete(post.id)"></i>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="d-flex justify-content-center">
+  <pagination-controls
+    (pageChange)="renderPage($event)"
+  ></pagination-controls>
+</div>
+
+<div class="modal fade" id="viewPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" *ngIf="postData">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">Post Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name"><b>Name:</b></label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="postData.name" readonly
+              [ngModelOptions]="{standalone: true}">
+          </div>
+
+          <div class="form-group">
+            <label for="id"><b>ID:</b></label>
+            <input type="text" class="form-control" id="id" [(ngModel)]="postData.id" readonly
+              [ngModelOptions]="{standalone: true}">
+          </div>
+
+          <div class="form-group">
+            <label for="description"><b>Description:</b></label>
+            <input type="text" class="form-control" id="description" [(ngModel)]="postData.description" readonly
+              [ngModelOptions]="{standalone: true}">
+          </div>
+
+          <div class="form-group">
+            <label for="imagePath"><b>ImagePath:</b></label>
+            <img [src]="'http://127.0.0.1:8000/' + postData.image_path" alt="Image" class="image-preview" class="image">
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
