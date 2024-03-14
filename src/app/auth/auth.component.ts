@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
 })
 export class AuthComponent {
   authObs: any;
-  email: any;
+
+email: any;
 
 
   constructor(private authService: AuthService) { }
