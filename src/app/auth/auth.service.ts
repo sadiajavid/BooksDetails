@@ -64,7 +64,8 @@ export class AuthService {
     return this.http.get(`http://127.0.0.1:8000/api/posts`+ '?page=' + page);
   }
   create(name:string,description:string,image_path:string,status:string){
-    return this.http.post("http://127.0.0.1:8000/api/posts", {name:name,description:description,image_path:image_path,status:status})
+    return this.http.post("http://127.0.0.1:8000/api/posts",
+     {name:name,description:description,image_path:image_path,status:status})
   }
 
   viewPosts(id: number) {
@@ -85,18 +86,22 @@ updatedPosts(id: any, formData: any) {
  logout(email:string,password:string){
   return this.http.post("http://127.0.0.1:8000/api/logout",{email,password} )
  }
+
  clearToken() {
   localStorage.removeItem('token'); 
   localStorage.removeItem('userData'); 
   localStorage.removeItem('expirationDate'); 
 
 }
+
 profile(){
   return this.http.get("http://127.0.0.1:8000/api/profile")
 }
+
 forget(email:string){
   return this.http.post("http://127.0.0.1:8000/api/password/email",{email:email})
 }
+
 resetpass(email:string,password:string,password_confirmation:string,token:string){
   return this.http.post("http://127.0.0.1:8000/api/password/reset",{email,password,password_confirmation,token})
 }
