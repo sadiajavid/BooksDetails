@@ -17,7 +17,7 @@ export class GetPostsComponent implements OnInit {
   postData: any ;
   postId: number = 0;
   pagination: number = 1;
-  allStudents: number = 0;
+  allStudents: number = 0 ;
 
   constructor(private authService: AuthService,
   private createService: CreateService) { }
