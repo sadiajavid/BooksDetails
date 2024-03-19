@@ -12,7 +12,6 @@ export class UpdateComponent implements OnInit {
   update: any;
   data: any;
   backendUrl: any = "http://127.0.0.1:8000"
-
   imageUrl: string = "";
   constructor(
     private authService: AuthService,private router: ActivatedRoute,private fb: FormBuilder,private Router:Router
@@ -25,12 +24,11 @@ export class UpdateComponent implements OnInit {
     image_Path: ['']
   })
 
-  ngOnInit(): void {
+  ngOnInit(): void {                                                                                   
 
     this.authService.viewPosts(this.router.snapshot.params['id']).subscribe((res: any) => {
       console.log(res);
       this.imageUrl = this.backendUrl + '/' + res.response.data.image_path;
-
       this.updateForm.patchValue({
         name: res.response.data.name,
         id: res.response.data.id,
@@ -38,7 +36,6 @@ export class UpdateComponent implements OnInit {
         image_Path : res.response.data.image_path,
       })
     });
-
   }
 
   updateData() {
@@ -47,7 +44,7 @@ export class UpdateComponent implements OnInit {
       this.Router.navigate(["/post"])
     })
   }
-  
+
 }
 
 

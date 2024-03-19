@@ -11,21 +11,20 @@ import Swal from 'sweetalert2';
 
 export class GetPostsComponent implements OnInit {
   searchText = '';
-  posts: any;
+  posts: any[] = [];
   currentPage: number = 1;
   totalPages: number = 1;
-  postData: any = {};
+  postData: any ;
   postId: number = 0;
   pagination: number = 1;
   allStudents: number = 0;
 
- 
-  constructor(private authService: AuthService, private createService: CreateService) {
-  }
+  constructor(private authService: AuthService,
+  private createService: CreateService) { }
 
   fetchData() {
     this.authService.getPosts(this.pagination).subscribe(
-      (res: any) => {
+      (res:any) => {
         this.posts = res.response.data.data;
         this.allStudents = res.response.data.total;
         console.log(this.allStudents);
@@ -71,7 +70,7 @@ export class GetPostsComponent implements OnInit {
             icon: "success"
           });
         });
-      }
+       }
     });
   }
 
@@ -79,9 +78,7 @@ export class GetPostsComponent implements OnInit {
     this.pagination = event;
     this.fetchData();
   }
-  
 }
-
 
 
 

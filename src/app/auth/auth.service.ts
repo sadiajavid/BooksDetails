@@ -17,7 +17,7 @@ export interface UserData {
 }
 export interface Auth {
   response: any;
- message: string;
+  message: string;
   status: number;
   data: UserData;
   access_token:string,
@@ -34,9 +34,11 @@ export class AuthService {
   user = new BehaviorSubject<Model | null>(null);
   constructor(private http: HttpClient ,private router:Router) { }
 
-  onRegister(email: string, password: string, name: string, status: number, phone: string): Observable<Auth> {
+  onRegister(email: string, password: string, name: string, 
+    status: number, phone: string): Observable<Auth> {
     return this.http.post<Auth>("http://127.0.0.1:8000/api/register", {
-      email: email, password: password, name: name, phone: phone, status: status
+      email: email, password: password, name: name, phone: phone,
+      status: status
     })
   }
 
@@ -44,20 +46,19 @@ export class AuthService {
     return this.http.post<Auth>("http://127.0.0.1:8000/api/login", {
       email: email, password: password
     }).pipe(tap((res)=>{
-     this.handleAuthentication(res.response.expires_in,res. response.access_token);
+     this.handleAuthentication(res.response.expires_in,
+      res. response.access_token);
      this.router.navigate(["/post"])
-
     }))
   }
 
   private handleAuthentication(expires_in:number,accesstoken:string):void{
     const expirationDate=new Date (new Date().getTime()+ expires_in*1000);
-    const user=new Model(accesstoken, expirationDate)
+    const user=new Model(accesstoken , expirationDate)
     this.user.next(user) 
     localStorage.setItem("userData",JSON.stringify(user));
     localStorage.setItem('token', accesstoken);
     localStorage.setItem('expirationDate', expirationDate.toISOString());
-    
   }  
 
   getPosts(page: number) {
@@ -91,7 +92,6 @@ updatedPosts(id: any, formData: any) {
   localStorage.removeItem('token'); 
   localStorage.removeItem('userData'); 
   localStorage.removeItem('expirationDate'); 
-
 }
 
 profile(){
@@ -99,12 +99,15 @@ profile(){
 }
 
 forget(email:string){
-  return this.http.post("http://127.0.0.1:8000/api/password/email",{email:email})
+  return this.http.post("http://127.0.0.1:8000/api/password/email",
+  {email:email})
 }
 
-resetpass(email:string,password:string,password_confirmation:string,token:string){
-  return this.http.post("http://127.0.0.1:8000/api/password/reset",{email,password,password_confirmation,token})
+resetpass(email:string,password:string,password_confirmation:string,
+  token:string){
+  return this.http.post("http://127.0.0.1:8000/api/password/reset",
+  {email,password,password_confirmation,token})
 }
 
-  }
+}
 

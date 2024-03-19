@@ -15,6 +15,7 @@ export class CreateService {
       this.submittedData.next(res);
     }));
   }
+  
   getSubmittedData():Observable<any>{
     return  this.submittedData.asObservable()
   }

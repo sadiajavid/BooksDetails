@@ -15,7 +15,6 @@ export class ForgetpassComponent {
       res => {
         console.log(res);
         Swal.fire("Password reset link sent to your email");
-        // this.router.navigate(["/auth"])
       }
  
     );

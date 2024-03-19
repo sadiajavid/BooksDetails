@@ -10,7 +10,7 @@ import { ResetpassComponent } from './resetpass/resetpass.component';
 
 const routes: Routes = [{path:"",redirectTo:"/auth",pathMatch:"full"},
 {path:"auth",component:AuthComponent},
-{path:"post",component:GetPostsComponent},
+{path:"post" ,component:GetPostsComponent},
 {path:"update/:id",component:UpdateComponent},
 {path:"profile",component:ProfileComponent},
 {path:"forget",component:ForgetpassComponent},

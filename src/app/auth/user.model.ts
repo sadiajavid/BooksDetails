@@ -1,3 +1,4 @@
+
 export class Model {
     constructor(private accessToken: string, private ExpirationDate: Date ) { }
     get token(): string | null {

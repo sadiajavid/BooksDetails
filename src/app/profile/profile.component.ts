@@ -8,14 +8,14 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ProfileComponent implements OnInit{
   profileData:any;
-  constructor(private authService:AuthService){}
+  constructor(private authService:AuthService){ }
   ngOnInit(): void {
     this.userProfile();
   }
  userProfile() {
-   this.authService.profile().subscribe((res:any)=>{
-this.profileData=res.response.data;
-    console.log(this.profileData)
+    this.authService.profile().subscribe((res:any)=>{
+    this.profileData=res.response.data;
+    console.log(this.profileData);
    })
   }
 

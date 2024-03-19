@@ -13,7 +13,9 @@ export class ResetpassComponent {
   password_confirmation: string='';
   email: string='';
   token: string='';
+  
 constructor(private authService:AuthService,private route:ActivatedRoute,private router:Router){}
+
 ngOnInit() {
   this.route.queryParams.subscribe(params => {
     this.email = params['email'];

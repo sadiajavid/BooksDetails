@@ -1,13 +1,11 @@
 <hr>
 <div class="d-flex">
   <app-create></app-create>
-
-
   <!-- <app-restore-post></app-restore-post> -->
 </div>
 <hr>
+
 <div class="form-group">
- 
   <input type="text" class="form-control" id="search-text" aria-describedby="search-text" 
     [(ngModel)]="searchText" placeholder="Enter text to search" 
     autofocus>
@@ -24,7 +22,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let post of posts  | paginate
-    : {
+    :{
         itemsPerPage:10,
         currentPage: pagination,
         totalItems: allStudents
@@ -38,9 +36,8 @@
         <div class="button-group">
             <i class="fa fa-eye fa-lg" style="color:green;  margin-right: 20px;"(click)="onViewPost(post.id)" data-toggle="modal"
             data-target="#viewPostModal"></i>
-          <a routerLink="/update/{{post.id}}">  <i class="fa fa-edit fa-lg" style="color:blue;  margin-right: 20px;" ></i></a>
-          
-           <i class="fa fa-trash fa-lg" style="color:red;  margin-right: 20px;" (click)="onDelete(post.id)"></i>
+            <a routerLink="/update/{{post.id}}">  <i class="fa fa-edit fa-lg" style="color:blue;  margin-right: 20px;" ></i></a>
+            <i class="fa fa-trash fa-lg" style="color:red;  margin-right: 20px;" (click)="onDelete(post.id)"></i>
         </div>
       </td>
     </tr>
@@ -62,6 +59,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
         <form>
           <div class="form-group">
@@ -86,9 +84,9 @@
             <label for="imagePath"><b>ImagePath:</b></label>
             <img [src]="'http://127.0.0.1:8000/' + postData.image_path" alt="Image" class="image-preview" class="image">
           </div>
-          
         </form>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
